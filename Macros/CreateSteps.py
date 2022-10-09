@@ -1,5 +1,7 @@
 # CreateSteps
 
+# doc to use it as macro: https://wiki.freecad.org/Macros/fr
+
 def padd(nb, nbDigits):
 
     nbStr = str(nb)
