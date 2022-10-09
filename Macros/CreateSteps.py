@@ -14,7 +14,7 @@ def padd(nb, nbDigits):
     return str(nbStr)
 
 
-def createAStep(bodyNumber, stepNumber, projectName, spreadsheet):
+def createAStep(bodyNumber, stepNumber, projectName, spreadsheet, stepPrefix):
     # Create the step
     ### Begin command PartDesign_Body
     name = 'Body' + padd(bodyNumber, 3)
@@ -28,10 +28,12 @@ def createAStep(bodyNumber, stepNumber, projectName, spreadsheet):
     ### End command PartDesign_Body
     
     # Place the step in z axis
-    getattr(App.getDocument(projectName), name).setExpression('.Placement.Base.z', u'{}.m{}'.format(spreadsheet, stepNumber))
+    # getattr(App.getDocument(projectName), name).setExpression('.Placement.Base.z', u'{}.m{}'.format(spreadsheet, stepNumber))
+    print(u'{}.{}{}'.format(spreadsheet, stepPrefix.lower, stepNumber))
+    getattr(App.getDocument(projectName), name).setExpression('.Placement.Base.z', u'{}.{}{}'.format(spreadsheet, stepPrefix.lower(), stepNumber))
 
     # Rename the step
-    FreeCAD.getDocument(projectName).getObject(name).Label = "M{}_{}".format(stepNumber, name)
+    FreeCAD.getDocument(projectName).getObject(name).Label = "{}{}_{}".format(stepPrefix.upper(), stepNumber, name)
     
     # Update view
     # App.ActiveDocument.recompute()
@@ -43,19 +45,16 @@ def createAStep(bodyNumber, stepNumber, projectName, spreadsheet):
 # # createAStep(nb=5, stepNumber=3, projectName='Maison', spreadsheet='Spreadsheet')
 # createAStep(bodyNumber=6, stepNumber=4, projectName='Maison', spreadsheet='Spreadsheet')
 
-def createSteps(firstStep, nbSteps, firstBody, projectName, spreadsheet):
+def createSteps(firstStep, nbSteps, firstBody, projectName, spreadsheet, stepPrefix):
 
-    nbSteps = 14 - 4
-    firstBody = 7
-    firstStep = 5
     projectName='Maison'
     spreadsheet='Spreadsheet'
 
     deltaStepBody = firstStep - firstBody
 
     for step in range(firstStep, firstStep + nbSteps):
-        createAStep(bodyNumber=step-deltaStepBody, stepNumber=step, projectName=projectName, spreadsheet=spreadsheet)
+        createAStep(bodyNumber=step-deltaStepBody, stepNumber=step, projectName=projectName, spreadsheet=spreadsheet, stepPrefix=stepPrefix)
         # print("step: {}, body: {}, delta: {}".format(step, step-deltaStepBody, deltaStepBody))
 
 
-createSteps(firstStep=5, nbSteps=14-4, firstBody=7, projectName='Maison', spreadsheet='Spreadsheet')
+createSteps(firstStep=1, nbSteps=2, firstBody=17, projectName='Maison', spreadsheet='Spreadsheet', stepPrefix='N')
