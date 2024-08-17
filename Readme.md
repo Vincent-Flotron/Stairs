@@ -9,7 +9,8 @@ Ce code est utilisé en copiant-collant son contenu dans la console FreeCAD.
 
 Le feuille de calcul "Escalier.ods" est utilisée pour dimensionner les escaliers.
 
-
+Lien sur la signification des icônes: <br/>
+[https://wiki.freecad.org/Tree_view#Overlay_icons](https://wiki.freecad.org/Tree_view#Overlay_icons)
 
 ## Remerciements
 
